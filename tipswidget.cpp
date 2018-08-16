@@ -49,8 +49,8 @@ void TipsWidget::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
 
-    QString text = QString("%1:%2 / %3:%4").arg(elapsedTime/60).arg(elapsedTime%60)
-                                    .arg(totalTime/60).arg(totalTime%60);
+    QString text = QString("%1:%2 / %3:%4").arg(elapsedTime/60,2,10,QChar('0')).arg(elapsedTime%60,2,10,QChar('0'))
+                                    .arg(totalTime/60,2,10,QChar('0')).arg(totalTime%60,2,10,QChar('0'));
 
     setFixedWidth(fontMetrics().width(text)+6);
 
