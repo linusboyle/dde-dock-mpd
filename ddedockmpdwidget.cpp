@@ -54,7 +54,7 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     centralLayout->addWidget(m_nextLabel);
     centralLayout->addWidget(m_playmodeLabel);
 
-    centralLayout->setSpacing(4);
+    centralLayout->setSpacing(5);
     centralLayout->setMargin(0);
 
     setLayout(centralLayout);

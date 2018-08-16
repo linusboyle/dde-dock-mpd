@@ -13,11 +13,7 @@ TipsWidget::TipsWidget(QWidget *parent)
 
     m_timer->setInterval(1000);
 
-    connect(m_interface,&MPDInterface::songChanged,[this](const MPDSong& _song){
-        //reset
-        this->totalTime = _song.totalTime;
-        this->elapsedTime = 0;
-    });
+    connect(m_interface,&MPDInterface::songChanged,this,&TipsWidget::onSongChanged);
 
     connect(m_timer,&QTimer::timeout,[this](){
         this->elapsedTime++;
@@ -66,4 +62,17 @@ void TipsWidget::paintEvent(QPaintEvent *event)
     QTextOption option;
     option.setAlignment(Qt::AlignCenter);
     painter.drawText(rect(), text, option);
+}
+
+void TipsWidget::onSongChanged(MPDSong _song){
+    static bool firsttime = true;
+
+    //reset
+    this->totalTime = _song.totalTime;
+    if(firsttime)
+        this->elapsedTime = m_interface->getElapsedTime();
+    else
+        this->elapsedTime = 0;
+
+    firsttime = false;
 }

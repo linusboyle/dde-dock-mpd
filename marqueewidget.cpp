@@ -36,7 +36,7 @@ void MarqueeWidget::paintEvent(QPaintEvent* event)
     p.setPen(Qt::white);
     //FIXME
     //4 is magic and inaccurate...
-    int baseline = (height()+fontMetrics().height())/2 - 4;
+    int baseline = (height()+fontMetrics().height())/2 - 3;
     if(scrollEnabled)
     {
         //it's not smooth but it works fine
@@ -48,7 +48,7 @@ void MarqueeWidget::paintEvent(QPaintEvent* event)
             scrollPos = -1;
         }
     } else {
-        p.drawText(0,baseline,m_text);
+        p.drawText((width()-fontMetrics().width(m_text))/2,baseline,m_text);
     }
 }
 

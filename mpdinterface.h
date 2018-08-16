@@ -20,6 +20,7 @@ public:
     }
 
     bool connectMPD();
+    int getElapsedTime();
 
     void changeState(MPDState state);
     void changeSong(MPDSong song);

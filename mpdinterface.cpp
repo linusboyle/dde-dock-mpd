@@ -132,6 +132,11 @@ bool MPDInterface::connectMPD(){
     return retval;
 }
 
+int MPDInterface::getElapsedTime()
+{
+   return mpd_status_get_elapsed_song_time(_mpdobj);
+}
+
 MPDInterface::~MPDInterface(){
     if(_mpdobj){
         mpd_free(_mpdobj);

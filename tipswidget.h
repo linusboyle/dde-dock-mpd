@@ -2,6 +2,7 @@
 #define TIPSWIDGET_H
 
 #include <QFrame>
+#include "mpd_global.h"
 
 class MPDInterface;
 class QTimer;
@@ -20,6 +21,9 @@ private:
     int totalTime;
     MPDInterface* m_interface;
     QTimer* m_timer;
+
+private slots:
+    void onSongChanged(MPDSong _song);
 };
 
 #endif // TIPSWIDGET_H
