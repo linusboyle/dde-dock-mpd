@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/font">
+        <file alias="fa.otf">resources/fa.otf</file>
+    </qresource>
+</RCC>
