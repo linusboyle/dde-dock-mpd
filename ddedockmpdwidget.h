@@ -8,6 +8,7 @@
 class IconLabel;
 class MarqueeWidget;
 class MPDInterface;
+class QSettings;
 
 class DDEDockMPDWidget : public QWidget
 {
@@ -15,6 +16,9 @@ class DDEDockMPDWidget : public QWidget
 public:
     explicit DDEDockMPDWidget(QWidget *parent = nullptr);
     ~DDEDockMPDWidget();
+
+    bool isEnabled();
+    void setEnabled(bool flag);
 
 public slots:
     void onStateChanged(MPDState);
@@ -29,9 +33,9 @@ private:
     IconLabel *m_playmodeLabel;
 
     MPDInterface* m_interface;
+    QSettings* m_setting;
 
     QFont font;
     void initFont();
-
 };
 #endif // DDEDOCKMPDWIDGET_H

@@ -5,6 +5,7 @@
 
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QSettings>
 
 DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     : QWidget(parent),
@@ -12,7 +13,8 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
       m_statusLabel(new IconLabel(this)),
       m_titleLabel(new MarqueeWidget(this)),
       m_nextLabel(new IconLabel(this)),
-      m_playmodeLabel(new IconLabel(this))
+      m_playmodeLabel(new IconLabel(this)),
+      m_setting(new QSettings("deepin","dde-dock-mpd",this))
 {
     m_interface = MPDInterface::instance();
     if(!m_interface->connectMPD()){
@@ -58,6 +60,14 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     centralLayout->setMargin(0);
 
     setLayout(centralLayout);
+}
+
+bool DDEDockMPDWidget::isEnabled(){
+    return m_setting->value("enabled",true).toBool();
+}
+
+void DDEDockMPDWidget::setEnabled(bool flag){
+    m_setting->setValue("enabled",flag);
 }
 
 DDEDockMPDWidget::~DDEDockMPDWidget()

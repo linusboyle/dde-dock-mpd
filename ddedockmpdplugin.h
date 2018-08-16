@@ -24,6 +24,12 @@ public:
     QWidget *itemWidget(const QString &itemKey) override;
     QWidget *itemTipsWidget(const QString &itemKey) override;
 
+    void pluginStateSwitched() override;
+    bool pluginIsAllowDisable() override {
+        return true;
+    }
+    bool pluginIsDisable() override;
+
 private:
     DDEDockMPDWidget* m_widget;
     TipsWidget* m_tipwidget;

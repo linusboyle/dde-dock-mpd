@@ -22,7 +22,8 @@ void DDEDockMPDPlugin::init(PluginProxyInterface *proxyInter) {
     m_widget = new DDEDockMPDWidget();
     m_tipwidget = new TipsWidget();
 
-    proxyInter->itemAdded(this,QString());
+    if(m_widget->isEnabled())
+        proxyInter->itemAdded(this,QString());
 }
 
 QWidget *DDEDockMPDPlugin::itemWidget(const QString &itemKey)
@@ -36,4 +37,20 @@ QWidget *DDEDockMPDPlugin::itemTipsWidget(const QString &itemKey){
     Q_UNUSED(itemKey);
 
     return m_tipwidget;
+}
+
+bool DDEDockMPDPlugin::pluginIsDisable(){
+    return !m_widget->isEnabled();
+}
+
+void DDEDockMPDPlugin::pluginStateSwitched(){
+    m_widget->setEnabled(!m_widget->isEnabled());
+
+    if(m_widget->isEnabled()){
+        m_proxyInter->itemAdded(this,QString());
+        m_widget->show();
+    } else {
+        m_proxyInter->itemRemoved(this,QString());
+        m_widget->hide();
+    }
 }
