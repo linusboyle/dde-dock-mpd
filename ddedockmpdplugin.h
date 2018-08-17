@@ -6,6 +6,7 @@
 
 class DDEDockMPDWidget;
 class TipsWidget;
+class QSettings;
 
 class DDEDockMPDPlugin : public QObject,PluginsItemInterface
 {
@@ -30,9 +31,18 @@ public:
     }
     bool pluginIsDisable() override;
 
+    const QString itemContextMenu(const QString &itemKey) override;
+    void invokedMenuItem(const QString& itemkey,const QString& menuId,const bool checked) override;
+
+    void displayModeChanged(const Dock::DisplayMode displaymode) override;
+
+    int itemSortKey(const QString &itemKey) override;
+    void setSortKey(const QString &itemKey, const int order) override;
+
 private:
     DDEDockMPDWidget* m_widget;
     TipsWidget* m_tipwidget;
+    QSettings* m_setting;
 };
 
 #endif // DDEDOCKMPDPLUGIN_H

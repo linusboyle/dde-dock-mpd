@@ -65,8 +65,6 @@ void MPDInterface::changeState(MPDState state){
 }
 
 void MPDInterface::changeSong(MPDSong song){
-    currentTotalTime = mpd_status_get_total_song_time(_mpdobj);
-
     emit songChanged(song);
 }
 
@@ -94,7 +92,7 @@ void MPDInterface::previousSong()
     mpd_player_prev(_mpdobj);
 }
 
-void MPDInterface::toggleMode()
+void MPDInterface::togglePlayMode()
 {
     mpd_player_set_random(_mpdobj,!mpd_player_get_random(_mpdobj));
 }
@@ -145,4 +143,13 @@ MPDInterface::~MPDInterface(){
 
 void MPDInterface::onTimerElapsed(){
     mpd_status_update(_mpdobj);
+}
+
+bool MPDInterface::getRepeatMode(){
+    return mpd_player_get_repeat(_mpdobj) ? true : false ;
+}
+
+void MPDInterface::switchRepeatMode()
+{
+   mpd_player_set_repeat(_mpdobj,!mpd_player_get_repeat(_mpdobj));
 }

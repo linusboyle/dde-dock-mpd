@@ -10,6 +10,11 @@ It shows the current state of the player and information about the currently pla
 
 Hover over the plugin to see the current playing progress of the song.
 
+**NOTE**: 
+
+- This plugin does not support fashion mode,'Cause the author think it's unnecessary to control MPD from it
+- User has to spare enough (about 200 pix) space for this plugin,so make your dock tidy :)
+
 ## Dependencies
 
 ### Compilation 

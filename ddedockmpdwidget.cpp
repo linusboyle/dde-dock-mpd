@@ -47,7 +47,7 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     connect(m_statusLabel,&IconLabel::clicked,m_interface,&MPDInterface::toggleState);
     connect(m_previousLabel,&IconLabel::clicked,m_interface,&MPDInterface::previousSong);
     connect(m_nextLabel,&IconLabel::clicked,m_interface,&MPDInterface::nextSong);
-    connect(m_playmodeLabel,&IconLabel::clicked,m_interface,&MPDInterface::toggleMode);
+    connect(m_playmodeLabel,&IconLabel::clicked,m_interface,&MPDInterface::togglePlayMode);
 
     QHBoxLayout *centralLayout = new QHBoxLayout;
     centralLayout->addWidget(m_previousLabel);

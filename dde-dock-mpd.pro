@@ -12,7 +12,6 @@ CONFIG  += plugin c++11 link_pkgconfig
 
 PKGCONFIG += libmpd
 
-#link_pkgconfig
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -54,3 +53,6 @@ INSTALLS += target
 
 RESOURCES += \
     res.qrc
+
+TRANSLATIONS = dde-dock-mpd_zh_CN.ts \
+                dde-dock-mpd_en.ts

@@ -1,4 +1,5 @@
 #include "iconlabel.h"
+#include <QMouseEvent>
 
 IconLabel::IconLabel(QWidget *parent):QLabel(parent)
 {
@@ -6,7 +7,9 @@ IconLabel::IconLabel(QWidget *parent):QLabel(parent)
 }
 
 void IconLabel::mousePressEvent(QMouseEvent *event) {
-    emit clicked();
+    if(event->button() == Qt::RightButton ){
+        return;
+    }
 
-    QLabel::mousePressEvent(event);
+    emit clicked();
 }

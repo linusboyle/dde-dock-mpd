@@ -22,6 +22,9 @@ public:
     bool connectMPD();
     int getElapsedTime();
 
+    bool getRepeatMode();
+    void switchRepeatMode();
+
     void changeState(MPDState state);
     void changeSong(MPDSong song);
     void changeMode(MPDPlayMode mode);
@@ -30,7 +33,7 @@ public slots:
     void toggleState();
     void nextSong();
     void previousSong();
-    void toggleMode();
+    void togglePlayMode();
 
 signals:
     void stateChanged(MPDState state);
@@ -44,7 +47,6 @@ private:
     MPDInterface(QObject *parent = nullptr);
     ~MPDInterface();
 
-    int currentTotalTime;
     QTimer* m_updateTimer;
 };
 
