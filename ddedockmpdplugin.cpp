@@ -30,11 +30,11 @@ void DDEDockMPDPlugin::init(PluginProxyInterface *proxyInter) {
     if(translator->load(":/qm/dde-dock-mpd_" + QLocale::system().name()))
         qApp->installTranslator(translator);
     else {
-        qDebug()<<"load failed for " <<QLocale::system().name();
+        qDebug()<<"load translation failed for " <<QLocale::system().name();
         translator->deleteLater();
     }
 
-    if(m_widget->isEnabled())
+    if(m_widget->isEnabled() && displayMode() == Dock::DisplayMode::Efficient)
         proxyInter->itemAdded(this,WIDGET_KEY);
 }
 
@@ -58,10 +58,10 @@ bool DDEDockMPDPlugin::pluginIsDisable(){
 void DDEDockMPDPlugin::pluginStateSwitched(){
     m_widget->setEnabled(!m_widget->isEnabled());
 
-    if(m_widget->isEnabled()){
+    if(m_widget->isEnabled() && displayMode() == Dock::DisplayMode::Efficient){
         m_proxyInter->itemAdded(this,WIDGET_KEY);
         m_widget->show();
-    } else {
+    } else if(displayMode() == Dock::DisplayMode::Efficient){
         m_proxyInter->itemRemoved(this,WIDGET_KEY);
         m_widget->hide();
     }
@@ -106,10 +106,13 @@ void DDEDockMPDPlugin::invokedMenuItem(const QString &itemkey, const QString &me
 void DDEDockMPDPlugin::displayModeChanged(const Dock::DisplayMode displaymode) {
     switch (displaymode) {
     case Dock::DisplayMode::Fashion:
-        m_proxyInter->itemRemoved(this,WIDGET_KEY);
+        if(!this->pluginIsDisable())
+            m_proxyInter->itemRemoved(this,WIDGET_KEY);
         break;
     case Dock::DisplayMode::Efficient:
-        m_proxyInter->itemAdded(this,WIDGET_KEY);
+        if(!this->pluginIsDisable())
+            m_proxyInter->itemAdded(this,WIDGET_KEY);
+        break;
     default:
         break;
     }

@@ -9,6 +9,8 @@ class IconLabel;
 class MarqueeWidget;
 class MPDInterface;
 class QSettings;
+class QHBoxLayout;
+class QVBoxLayout;
 
 class DDEDockMPDWidget : public QWidget
 {
@@ -37,5 +39,8 @@ private:
 
     QFont font;
     void initFont();
+
+    QHBoxLayout* m_hlayout;
+//    QVBoxLayout* m_vlayout;
 };
 #endif // DDEDOCKMPDWIDGET_H
