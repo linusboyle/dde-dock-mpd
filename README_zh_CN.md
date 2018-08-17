@@ -1,5 +1,7 @@
 # dde-dock-mpd
 
+![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase.png)
+
 本插件用于实现从dde-dock查看并控制MPD的状态,目前你可以从dock上暂停、播放、切换上下首、切换随机播放/列表播放
 
 将鼠标悬停至插件上方以查看实时的播放进度
