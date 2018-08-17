@@ -3,6 +3,8 @@
 #include "tipswidget.h"
 #include "mpdinterface.h"
 
+#define WIDGET_KEY QString("dde-dock-mpd")
+
 DDEDockMPDPlugin::DDEDockMPDPlugin(QObject *parent)
                 :QObject(parent)
 {
@@ -23,7 +25,7 @@ void DDEDockMPDPlugin::init(PluginProxyInterface *proxyInter) {
     m_tipwidget = new TipsWidget();
 
     if(m_widget->isEnabled())
-        proxyInter->itemAdded(this,QString());
+        proxyInter->itemAdded(this,WIDGET_KEY);
 }
 
 QWidget *DDEDockMPDPlugin::itemWidget(const QString &itemKey)
@@ -47,10 +49,10 @@ void DDEDockMPDPlugin::pluginStateSwitched(){
     m_widget->setEnabled(!m_widget->isEnabled());
 
     if(m_widget->isEnabled()){
-        m_proxyInter->itemAdded(this,QString());
+        m_proxyInter->itemAdded(this,WIDGET_KEY);
         m_widget->show();
     } else {
-        m_proxyInter->itemRemoved(this,QString());
+        m_proxyInter->itemRemoved(this,WIDGET_KEY);
         m_widget->hide();
     }
 }
