@@ -34,7 +34,8 @@ void DDEDockMPDPlugin::init(PluginProxyInterface *proxyInter) {
         translator->deleteLater();
     }
 
-    if(m_widget->isEnabled() && displayMode() == Dock::DisplayMode::Efficient)
+    if(m_widget->isEnabled() && displayMode() == Dock::DisplayMode::Efficient
+            && positionValid() )
         proxyInter->itemAdded(this,WIDGET_KEY);
 }
 
@@ -58,10 +59,10 @@ bool DDEDockMPDPlugin::pluginIsDisable(){
 void DDEDockMPDPlugin::pluginStateSwitched(){
     m_widget->setEnabled(!m_widget->isEnabled());
 
-    if(m_widget->isEnabled() && displayMode() == Dock::DisplayMode::Efficient){
+    if(m_widget->isEnabled() && displayMode() == Dock::DisplayMode::Efficient && positionValid()){
         m_proxyInter->itemAdded(this,WIDGET_KEY);
         m_widget->show();
-    } else if(displayMode() == Dock::DisplayMode::Efficient){
+    } else if(displayMode() == Dock::DisplayMode::Efficient && positionValid()){
         m_proxyInter->itemRemoved(this,WIDGET_KEY);
         m_widget->hide();
     }
@@ -105,16 +106,35 @@ void DDEDockMPDPlugin::invokedMenuItem(const QString &itemkey, const QString &me
 
 void DDEDockMPDPlugin::displayModeChanged(const Dock::DisplayMode displaymode) {
     switch (displaymode) {
-    case Dock::DisplayMode::Fashion:
-        if(!this->pluginIsDisable())
-            m_proxyInter->itemRemoved(this,WIDGET_KEY);
-        break;
-    case Dock::DisplayMode::Efficient:
-        if(!this->pluginIsDisable())
-            m_proxyInter->itemAdded(this,WIDGET_KEY);
-        break;
-    default:
-        break;
+        case Dock::DisplayMode::Fashion:
+            if(!this->pluginIsDisable() && positionValid())
+                m_proxyInter->itemRemoved(this,WIDGET_KEY);
+            break;
+        case Dock::DisplayMode::Efficient:
+            if(!this->pluginIsDisable() && positionValid())
+                m_proxyInter->itemAdded(this,WIDGET_KEY);
+            break;
+        default:
+            break;
+    }
+}
+
+void DDEDockMPDPlugin::positionChanged(const Dock::Position position) {
+    switch (position) {
+        case Dock::Position::Bottom:
+        case Dock::Position::Top:
+            if(!this->pluginIsDisable() && displayMode() == Dock::DisplayMode::Efficient){
+                m_proxyInter->itemAdded(this,WIDGET_KEY);
+            }
+            break;
+        case Dock::Position::Left:
+        case Dock::Position::Right:
+            if(!this->pluginIsDisable() && displayMode() == Dock::DisplayMode::Efficient){
+                m_proxyInter->itemRemoved(this,WIDGET_KEY);
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -128,4 +148,18 @@ void DDEDockMPDPlugin::setSortKey(const QString &itemKey, const int order) {
     Q_UNUSED(itemKey);
 
     m_setting->setValue("position",order);
+}
+
+bool DDEDockMPDPlugin::positionValid(){
+     switch (position()) {
+        case Dock::Position::Bottom:
+        case Dock::Position::Top:
+            return true;
+        case Dock::Position::Left:
+        case Dock::Position::Right:
+            return false;
+        default:
+            Q_UNREACHABLE();
+            break;
+    }
 }

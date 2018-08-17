@@ -39,8 +39,5 @@ private:
 
     QFont font;
     void initFont();
-
-    QHBoxLayout* m_hlayout;
-//    QVBoxLayout* m_vlayout;
 };
 #endif // DDEDOCKMPDWIDGET_H

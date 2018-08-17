@@ -49,26 +49,17 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     connect(m_nextLabel,&IconLabel::clicked,m_interface,&MPDInterface::nextSong);
     connect(m_playmodeLabel,&IconLabel::clicked,m_interface,&MPDInterface::togglePlayMode);
 
-    m_hlayout = new QHBoxLayout();
-    m_hlayout->addWidget(m_previousLabel);
-    m_hlayout->addWidget(m_statusLabel);
-    m_hlayout->addWidget(m_titleLabel);
-    m_hlayout->addWidget(m_nextLabel);
-    m_hlayout->addWidget(m_playmodeLabel);
+    QHBoxLayout *centralLayout = new QHBoxLayout;
+    centralLayout->addWidget(m_previousLabel);
+    centralLayout->addWidget(m_statusLabel);
+    centralLayout->addWidget(m_titleLabel);
+    centralLayout->addWidget(m_nextLabel);
+    centralLayout->addWidget(m_playmodeLabel);
 
-//    m_vlayout = new QVBoxLayout();
-//    m_vlayout->addWidget(m_previousLabel);
-//    m_vlayout->addWidget(m_statusLabel);
-//    m_vlayout->addWidget(m_nextLabel);
-//    m_vlayout->addWidget(m_playmodeLabel);
+    centralLayout->setSpacing(5);
+    centralLayout->setMargin(0);
 
-    m_hlayout->setSpacing(5);
-    m_hlayout->setMargin(0);
-
-//    m_vlayout->setMargin(0);
-//    m_vlayout->setMargin(0);
-
-    setLayout(m_hlayout);
+    setLayout(centralLayout);
 }
 
 bool DDEDockMPDWidget::isEnabled(){

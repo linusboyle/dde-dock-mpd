@@ -35,6 +35,7 @@ public:
     void invokedMenuItem(const QString& itemkey,const QString& menuId,const bool checked) override;
 
     void displayModeChanged(const Dock::DisplayMode displaymode) override;
+    void positionChanged(const Dock::Position position) override;
 
     int itemSortKey(const QString &itemKey) override;
     void setSortKey(const QString &itemKey, const int order) override;
@@ -43,6 +44,8 @@ private:
     DDEDockMPDWidget* m_widget;
     TipsWidget* m_tipwidget;
     QSettings* m_setting;
+
+    bool positionValid();
 };
 
 #endif // DDEDOCKMPDPLUGIN_H
