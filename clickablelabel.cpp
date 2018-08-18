@@ -7,9 +7,7 @@ ClickableLabel::ClickableLabel(QWidget *parent):QLabel(parent)
 }
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event) {
-    if(event->button() == Qt::RightButton ){
-        return;
+    if(event->button() == Qt::LeftButton ){
+        emit clicked();
     }
-
-    emit clicked();
 }
