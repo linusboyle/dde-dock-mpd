@@ -3,6 +3,7 @@
 #include "tipswidget.h"
 #include "mpdinterface.h"
 #include <QDebug>
+#include <QMessageBox>
 #include "playlistwidget.h"
 
 #define WIDGET_KEY QString("dde-dock-mpd")
@@ -80,7 +81,7 @@ const QString DDEDockMPDPlugin::itemContextMenu(const QString &itemKey){
     Q_UNUSED(itemKey);
 
     QList<QVariant> items;
-    items.reserve(1);
+    items.reserve(2);
 
     QMap<QString, QVariant> mode;
     mode["itemId"] = "repeatMode";
@@ -92,8 +93,12 @@ const QString DDEDockMPDPlugin::itemContextMenu(const QString &itemKey){
     mode["isActive"] = true;
     items.push_back(mode);
 
-    //TODO
-    //more utils
+    QMap<QString,QVariant> about;
+    about["itemId"] = "about";
+    about["itemText"] = tr("About");
+    about["isActive"] = true;
+    items.push_back(about);
+
 
     QMap<QString, QVariant> menu;
     menu["items"] = items;
@@ -107,9 +112,16 @@ void DDEDockMPDPlugin::invokedMenuItem(const QString &itemkey, const QString &me
     Q_UNUSED(itemkey);
     Q_UNUSED(checked);
 
-    Q_ASSERT(menuId == "repeatMode");
-
-    MPDInterface::instance()->switchRepeatMode();
+    if(menuId == "repeatMode")
+        MPDInterface::instance()->switchRepeatMode();
+    else if (menuId == "about"){
+        QMessageBox aboutMessage(QMessageBox::NoIcon,tr("MPD Control Plugin"),tr("This Plugin is intended for "
+                                              "getting information of and controlling MPD"
+                                              "from dde-dock\nAuthor:Linus Boyle<linusboyle@gmail.com>\n"
+                                              "Licensed under GPLv3,you can find the source code on Github"));
+        aboutMessage.setIconPixmap(QPixmap(":/icon/mpd.svg").scaled(48,48,Qt::KeepAspectRatio));
+        aboutMessage.exec();
+    }
 }
 
 void DDEDockMPDPlugin::displayModeChanged(const Dock::DisplayMode displaymode) {
