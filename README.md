@@ -3,6 +3,7 @@
 # dde-dock-mpd
 
 ![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase.png)
+![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase2.png)
 
 This is a plugin of [dde-dock](https://github.com/linuxdeepin/dde-dock) to facilitate user's control of MPD.
 

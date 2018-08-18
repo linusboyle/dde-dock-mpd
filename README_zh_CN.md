@@ -1,6 +1,7 @@
 # dde-dock-mpd
 
 ![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase.png)
+![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase2.png)
 
 本插件用于实现从dde-dock查看并控制MPD的状态,目前你可以
 
