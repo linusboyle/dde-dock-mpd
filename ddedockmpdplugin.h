@@ -7,6 +7,7 @@
 class DDEDockMPDWidget;
 class TipsWidget;
 class QSettings;
+class PlaylistWidget;
 
 class DDEDockMPDPlugin : public QObject,PluginsItemInterface
 {
@@ -24,6 +25,7 @@ public:
 
     QWidget *itemWidget(const QString &itemKey) override;
     QWidget *itemTipsWidget(const QString &itemKey) override;
+    QWidget *itemPopupApplet(const QString &itemKey) override;
 
     void pluginStateSwitched() override;
     bool pluginIsAllowDisable() override {
@@ -44,6 +46,7 @@ private:
     DDEDockMPDWidget* m_widget;
     TipsWidget* m_tipwidget;
     QSettings* m_setting;
+    PlaylistWidget* m_playlist;
 
     bool positionValid();
 };

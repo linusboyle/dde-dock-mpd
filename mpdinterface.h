@@ -21,8 +21,10 @@ public:
 
     bool connectMPD();
 
-    void getPlaylist();
+    QList<QString> getPlaylist();
     int getElapsedTime();
+    int getTotalTime();
+    MPDState getState();
 
     bool getRepeatMode();
     void switchRepeatMode();
@@ -30,6 +32,7 @@ public:
     void changeState(MPDState state);
     void changeSong(MPDSong song);
     void changeMode(MPDPlayMode mode);
+    void changePlaylist();
 
 public slots:
     void toggleState();
@@ -41,6 +44,7 @@ signals:
     void stateChanged(MPDState state);
     void songChanged(MPDSong song);
     void modeChanged(MPDPlayMode mode);
+    void playlistChanged();
 
 private slots:
     void onTimerElapsed();

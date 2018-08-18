@@ -3,11 +3,11 @@
 
 #include <QLabel>
 
-class IconLabel : public QLabel
+class ClickableLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit IconLabel(QWidget* parent = nullptr);
+    explicit ClickableLabel(QWidget* parent = nullptr);
 signals:
     void clicked();
 protected:

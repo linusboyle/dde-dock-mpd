@@ -5,7 +5,7 @@
 #include <QFontDatabase>
 #include "mpd_global.h"
 
-class IconLabel;
+class ClickableLabel;
 class MarqueeWidget;
 class MPDInterface;
 class QSettings;
@@ -28,11 +28,11 @@ public slots:
     void onModeChanged(MPDPlayMode);
 
 private:
-    IconLabel *m_previousLabel;
-    IconLabel *m_statusLabel;
+    ClickableLabel *m_previousLabel;
+    ClickableLabel *m_statusLabel;
     MarqueeWidget *m_titleLabel;
-    IconLabel *m_nextLabel;
-    IconLabel *m_playmodeLabel;
+    ClickableLabel *m_nextLabel;
+    ClickableLabel *m_playmodeLabel;
 
     MPDInterface* m_interface;
     QSettings* m_setting;

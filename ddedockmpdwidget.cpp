@@ -1,5 +1,5 @@
 #include "ddedockmpdwidget.h"
-#include "iconlabel.h"
+#include "clickablelabel.h"
 #include "marqueewidget.h"
 #include "mpdinterface.h"
 
@@ -9,11 +9,11 @@
 
 DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     : QWidget(parent),
-      m_previousLabel(new IconLabel(this)),
-      m_statusLabel(new IconLabel(this)),
+      m_previousLabel(new ClickableLabel(this)),
+      m_statusLabel(new ClickableLabel(this)),
       m_titleLabel(new MarqueeWidget(this)),
-      m_nextLabel(new IconLabel(this)),
-      m_playmodeLabel(new IconLabel(this)),
+      m_nextLabel(new ClickableLabel(this)),
+      m_playmodeLabel(new ClickableLabel(this)),
       m_setting(new QSettings("deepin","dde-dock-mpd",this))
 {
     m_interface = MPDInterface::instance();
@@ -44,10 +44,10 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     connect(m_interface,&MPDInterface::modeChanged,this,&DDEDockMPDWidget::onModeChanged);
 
     //update player
-    connect(m_statusLabel,&IconLabel::clicked,m_interface,&MPDInterface::toggleState);
-    connect(m_previousLabel,&IconLabel::clicked,m_interface,&MPDInterface::previousSong);
-    connect(m_nextLabel,&IconLabel::clicked,m_interface,&MPDInterface::nextSong);
-    connect(m_playmodeLabel,&IconLabel::clicked,m_interface,&MPDInterface::togglePlayMode);
+    connect(m_statusLabel,&ClickableLabel::clicked,m_interface,&MPDInterface::toggleState);
+    connect(m_previousLabel,&ClickableLabel::clicked,m_interface,&MPDInterface::previousSong);
+    connect(m_nextLabel,&ClickableLabel::clicked,m_interface,&MPDInterface::nextSong);
+    connect(m_playmodeLabel,&ClickableLabel::clicked,m_interface,&MPDInterface::togglePlayMode);
 
     QHBoxLayout *centralLayout = new QHBoxLayout;
     centralLayout->addWidget(m_previousLabel);
@@ -60,8 +60,6 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     centralLayout->setMargin(0);
 
     setLayout(centralLayout);
-
-    m_interface->getPlaylist();
 }
 
 bool DDEDockMPDWidget::isEnabled(){

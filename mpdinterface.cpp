@@ -26,27 +26,32 @@ static void status_changed(MpdObj *mi,ChangedStatusType what){
 
     if(what&MPD_CST_STATE){
         switch (mpd_player_get_state(mi)) {
-        case MPD_PLAYER_PLAY:
-            interface->changeState(MPDState::PLAY);
-            break;
-        case MPD_PLAYER_PAUSE:
-            interface->changeState(MPDState::PAUSE);
-            break;
-        case MPD_PLAYER_STOP:
-            interface->changeState(MPDState::STOP);
-            break;
-        default:
-            break;
+            case MPD_PLAYER_PLAY:
+                interface->changeState(MPDState::PLAY);
+                break;
+            case MPD_PLAYER_PAUSE:
+                interface->changeState(MPDState::PAUSE);
+                break;
+            case MPD_PLAYER_STOP:
+                interface->changeState(MPDState::STOP);
+                break;
+            default:
+                break;
         }
     }
 
     if(what&MPD_CST_RANDOM){
         int mode = mpd_player_get_random(_mpdobj);
+
         if(mode) {
             interface->changeMode(MPDPlayMode::RANDOM);
         } else {
             interface->changeMode(MPDPlayMode::LIST);
         }
+    }
+
+    if(what&MPD_CST_PLAYLIST){
+        interface->changePlaylist();
     }
     //TODO
     //more handle
@@ -68,6 +73,10 @@ void MPDInterface::changeSong(MPDSong song){
 
 void MPDInterface::changeMode(MPDPlayMode mode){
     emit modeChanged(mode);
+}
+
+void MPDInterface::changePlaylist(){
+    emit playlistChanged();
 }
 
 void MPDInterface::toggleState()
@@ -130,7 +139,27 @@ bool MPDInterface::connectMPD(){
 
 int MPDInterface::getElapsedTime()
 {
-   return mpd_status_get_elapsed_song_time(_mpdobj);
+    return mpd_status_get_elapsed_song_time(_mpdobj);
+}
+
+int MPDInterface::getTotalTime()
+{
+    return mpd_status_get_total_song_time(_mpdobj);
+}
+
+MPDState MPDInterface::getState()
+{
+    switch (mpd_player_get_state(_mpdobj)) {
+        case MPD_PLAYER_PLAY:
+            return MPDState::PLAY;
+        case MPD_PLAYER_PAUSE:
+            return MPDState::PAUSE;
+        case MPD_PLAYER_STOP:
+            return MPDState::STOP;
+        default:
+            Q_UNREACHABLE();
+            break;
+    }
 }
 
 MPDInterface::~MPDInterface(){
@@ -144,19 +173,28 @@ void MPDInterface::onTimerElapsed(){
 }
 
 bool MPDInterface::getRepeatMode(){
-    return mpd_player_get_repeat(_mpdobj) ? true : false ;
+    return mpd_player_get_repeat(_mpdobj);
 }
 
 void MPDInterface::switchRepeatMode()
 {
-   mpd_player_set_repeat(_mpdobj,!mpd_player_get_repeat(_mpdobj));
+    mpd_player_set_repeat(_mpdobj,!mpd_player_get_repeat(_mpdobj));
 }
 
-void MPDInterface::getPlaylist(){
+QList<QString> MPDInterface::getPlaylist(){
     int listLength = mpd_playlist_get_playlist_length(_mpdobj);
 
+    QList<QString> playlist;
     for(int i=0;i!=listLength;++i){
-        mpd_Song* _song = mpd_playlist_get_song_from_pos(_mpdobj,i);
-        qDebug()<<_song->file;
+        mpd_Song* song = mpd_playlist_get_song_from_pos(_mpdobj,i);
+        if(!song->title){
+            playlist.push_back(QString(song->file));
+        } else if (!song->artist){
+            playlist.push_back(QString(song->title));
+        } else {
+            playlist.push_back(QString("%1 - %2").arg(song->artist).arg(song->title));
+        }
     }
+
+    return playlist;
 }

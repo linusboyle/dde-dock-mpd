@@ -25,21 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        ddedockmpdplugin.cpp \
+    ddedockmpdplugin.cpp \
     ddedockmpdwidget.cpp \
-    iconlabel.cpp \
     mpdinterface.cpp \
     marqueewidget.cpp \
-    tipswidget.cpp
+    tipswidget.cpp \
+    playlistwidget.cpp \
+    clickablelabel.cpp
 
 HEADERS += \
-        ddedockmpdplugin.h \
+    ddedockmpdplugin.h \
     ddedockmpdwidget.h \
-    iconlabel.h \
     mpdinterface.h \
     mpd_global.h \
     marqueewidget.h \
-    tipswidget.h
+    tipswidget.h \
+    playlistwidget.h \
+    clickablelabel.h
 
 DISTFILES += \
     dde-dock-mpd.json

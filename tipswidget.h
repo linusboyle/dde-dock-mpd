@@ -24,6 +24,7 @@ private:
 
 private slots:
     void onSongChanged(MPDSong _song);
+    void onStateChanged(MPDState state);
 };
 
 #endif // TIPSWIDGET_H

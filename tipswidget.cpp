@@ -20,25 +20,26 @@ TipsWidget::TipsWidget(QWidget *parent)
         update();
     });
 
-    connect(m_interface,&MPDInterface::stateChanged,[this](MPDState state){
-        switch (state) {
-            case MPDState::PAUSE:
-                m_timer->stop();
-                break;
-            case MPDState::STOP:
-                m_timer->stop();
-                totalTime = 0;
-                elapsedTime = 0;
-                break;
-            case MPDState::PLAY:
-                m_timer->start();
-                break;
-            default:
-                break;
-        }
-        update();
-    });
-    m_timer->start();
+    connect(m_interface,&MPDInterface::stateChanged,this,&TipsWidget::onStateChanged);
+
+    //startup init
+    switch (m_interface->getState()) {
+        case MPDState::PAUSE:
+            totalTime = m_interface->getTotalTime();
+            elapsedTime = m_interface->getElapsedTime();
+            break;
+        case MPDState::STOP:
+            totalTime = 0;
+            elapsedTime = 0;
+            break;
+        case MPDState::PLAY:
+            totalTime = m_interface->getTotalTime();
+            elapsedTime = m_interface->getElapsedTime();
+            m_timer->start();
+            break;
+        default:
+            break;
+    }
 }
 
 
@@ -72,4 +73,23 @@ void TipsWidget::onSongChanged(MPDSong _song){
         this->elapsedTime = 0;
 
     firsttime = false;
+}
+
+void TipsWidget::onStateChanged(MPDState state){
+    switch (state) {
+        case MPDState::PAUSE:
+            m_timer->stop();
+            break;
+        case MPDState::STOP:
+            m_timer->stop();
+            totalTime = 0;
+            elapsedTime = 0;
+            break;
+        case MPDState::PLAY:
+            m_timer->start();
+            break;
+        default:
+            break;
+    }
+    update();
 }

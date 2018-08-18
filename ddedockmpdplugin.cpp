@@ -3,6 +3,7 @@
 #include "tipswidget.h"
 #include "mpdinterface.h"
 #include <QDebug>
+#include "playlistwidget.h"
 
 #define WIDGET_KEY QString("dde-dock-mpd")
 
@@ -25,6 +26,7 @@ void DDEDockMPDPlugin::init(PluginProxyInterface *proxyInter) {
 
     m_widget = new DDEDockMPDWidget();
     m_tipwidget = new TipsWidget();
+    m_playlist = new PlaylistWidget();
 
     QTranslator* translator = new QTranslator();
     if(translator->load(":/qm/dde-dock-mpd_" + QLocale::system().name()))
@@ -50,6 +52,12 @@ QWidget *DDEDockMPDPlugin::itemTipsWidget(const QString &itemKey){
     Q_UNUSED(itemKey);
 
     return m_tipwidget;
+}
+
+QWidget *DDEDockMPDPlugin::itemPopupApplet(const QString &itemKey){
+    Q_UNUSED(itemKey);
+
+    return m_playlist;
 }
 
 bool DDEDockMPDPlugin::pluginIsDisable(){
