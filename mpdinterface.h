@@ -26,6 +26,8 @@ public:
     int getTotalTime();
     MPDState getState();
 
+    void playSong(int index);
+
     bool getRepeatMode();
     void switchRepeatMode();
 

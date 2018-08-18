@@ -8,7 +8,7 @@
 #define SPACING 2
 
 PlaylistWidget::PlaylistWidget(QWidget* parent):
-        QScrollArea(parent)
+        DScrollArea(parent)
 {
     m_widget = new QWidget(this);
     m_layout = new QVBoxLayout();
@@ -26,8 +26,7 @@ PlaylistWidget::PlaylistWidget(QWidget* parent):
     setWidget(m_widget);
     setFixedWidth(FIX_WIDTH);
     setFrameStyle(QFrame::NoFrame);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setAutoHideScrollBar(true);
     setStyleSheet("background-color:transparent;");
 
     connect(m_interface,&MPDInterface::playlistChanged,this,&PlaylistWidget::onPlaylistChanged);
@@ -43,17 +42,17 @@ void PlaylistWidget::onPlaylistChanged(){
         delete item;
     }
 
-    int height = 0;
+    int height = SPACING;
     for(auto songname: playlist){
         ClickableLabel* item = new ClickableLabel(m_widget);
         item->setText(songname);
 
-        //TODO
-        //handle the click
+        connect(item,&ClickableLabel::clicked,this,&PlaylistWidget::onSongSelected);
+
+        height += item->height();
+        height += SPACING;
 
         m_layout->addWidget(item);
-        height += item->height();
-        height += SPACING*2;
     }
 
     m_widget->setFixedHeight(height);
@@ -61,4 +60,15 @@ void PlaylistWidget::onPlaylistChanged(){
     height = qMin(height,200);
 
     this->setFixedHeight(height);
+}
+
+void PlaylistWidget::onSongSelected(){
+    ClickableLabel *song = qobject_cast<ClickableLabel*>(sender());
+    int index = m_layout->indexOf(song);
+
+    if(index < 0) {
+        qDebug()<<"selected song not found,plz report this bug to github";
+    } else {
+        m_interface->playSong(index);
+    }
 }

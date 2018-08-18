@@ -75,6 +75,11 @@ void MPDInterface::changeMode(MPDPlayMode mode){
     emit modeChanged(mode);
 }
 
+void MPDInterface::playSong(int index){
+    mpd_Song* song = mpd_playlist_get_song_from_pos(_mpdobj,index);
+    mpd_player_play_id(_mpdobj,song->id);
+}
+
 void MPDInterface::changePlaylist(){
     emit playlistChanged();
 }
@@ -188,11 +193,11 @@ QList<QString> MPDInterface::getPlaylist(){
     for(int i=0;i!=listLength;++i){
         mpd_Song* song = mpd_playlist_get_song_from_pos(_mpdobj,i);
         if(!song->title){
-            playlist.push_back(QString(song->file));
+            playlist.push_back(QString("・") + QString(song->file));
         } else if (!song->artist){
-            playlist.push_back(QString(song->title));
+            playlist.push_back(QString("・") + QString(song->title));
         } else {
-            playlist.push_back(QString("%1 - %2").arg(song->artist).arg(song->title));
+            playlist.push_back(QString("・") + QString("%1 - %2").arg(song->artist).arg(song->title));
         }
     }
 

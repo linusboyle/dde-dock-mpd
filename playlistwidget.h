@@ -2,13 +2,16 @@
 #define PLAYLISTWIDGET_H
 
 
-#include <QScrollArea>
+#include <dscrollarea.h>
+
+DWIDGET_USE_NAMESPACE
 
 class QVBoxLayout;
 class MPDInterface;
 
-class PlaylistWidget : public QScrollArea
+class PlaylistWidget : public DScrollArea
 {
+    Q_OBJECT
 public:
     PlaylistWidget(QWidget* parent = nullptr);
 
@@ -19,6 +22,7 @@ private:
 
 private slots:
     void onPlaylistChanged();
+    void onSongSelected();
 };
 
 #endif // PLAYLISTWIDGET_H

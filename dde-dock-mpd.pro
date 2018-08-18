@@ -10,7 +10,7 @@ TARGET = MPDcontroller
 TEMPLATE = lib
 CONFIG  += plugin c++11 link_pkgconfig
 
-PKGCONFIG += libmpd
+PKGCONFIG += libmpd dtkwidget
 
 
 # The following define makes your compiler emit warnings if you use
