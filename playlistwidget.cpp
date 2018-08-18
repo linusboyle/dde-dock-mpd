@@ -20,13 +20,14 @@ PlaylistWidget::PlaylistWidget(QWidget* parent):
     m_widget->setFixedWidth(FIX_WIDTH);
 
     m_widget->setStyleSheet("QLabel {"
-                               "color: white;"
-                               "}");
+                            "color: white;"
+                            "}");
 
     setWidget(m_widget);
     setFixedWidth(FIX_WIDTH);
     setFrameStyle(QFrame::NoFrame);
-    setAutoHideScrollBar(true);
+    setAutoHideScrollBar(false);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setStyleSheet("background-color:transparent;");
 
     connect(m_interface,&MPDInterface::playlistChanged,this,&PlaylistWidget::onPlaylistChanged);
@@ -45,7 +46,12 @@ void PlaylistWidget::onPlaylistChanged(){
     int height = SPACING;
     for(auto songname: playlist){
         ClickableLabel* item = new ClickableLabel(m_widget);
+        item->setObjectName("PlaylistItem");
         item->setText(songname);
+        item->setStyleSheet("ClickableLabel:hover {"
+                            "background-color:rgba(255, 255, 255, .1);"
+                            "color:mistyrose;"
+                            "}");
 
         connect(item,&ClickableLabel::clicked,this,&PlaylistWidget::onSongSelected);
 
