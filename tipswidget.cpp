@@ -17,9 +17,6 @@ TipsWidget::TipsWidget(QWidget *parent)
 
     connect(m_timer,&QTimer::timeout,[this](){
         this->elapsedTime++;
-        //NOTE
-        //just not sure about repeat mode behaviour
-        this->elapsedTime = this->elapsedTime % this->totalTime;
         update();
     });
 

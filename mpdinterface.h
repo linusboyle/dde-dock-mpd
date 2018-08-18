@@ -20,6 +20,8 @@ public:
     }
 
     bool connectMPD();
+
+    void getPlaylist();
     int getElapsedTime();
 
     bool getRepeatMode();

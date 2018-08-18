@@ -4,8 +4,6 @@
 #include <QTimer>
 #include "string.h"
 
-//all the wrap is like a hack
-
 static MpdObj* _mpdobj;
 
 static void error_callback(MpdObj *mi,int errorid, char *msg, void *userdata)
@@ -152,4 +150,13 @@ bool MPDInterface::getRepeatMode(){
 void MPDInterface::switchRepeatMode()
 {
    mpd_player_set_repeat(_mpdobj,!mpd_player_get_repeat(_mpdobj));
+}
+
+void MPDInterface::getPlaylist(){
+    int listLength = mpd_playlist_get_playlist_length(_mpdobj);
+
+    for(int i=0;i!=listLength;++i){
+        mpd_Song* _song = mpd_playlist_get_song_from_pos(_mpdobj,i);
+        qDebug()<<_song->file;
+    }
 }

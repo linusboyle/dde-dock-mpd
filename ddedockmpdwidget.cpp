@@ -60,6 +60,8 @@ DDEDockMPDWidget::DDEDockMPDWidget(QWidget *parent)
     centralLayout->setMargin(0);
 
     setLayout(centralLayout);
+
+    m_interface->getPlaylist();
 }
 
 bool DDEDockMPDWidget::isEnabled(){
