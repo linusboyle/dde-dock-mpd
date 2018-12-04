@@ -1,3 +1,5 @@
+# 警告：dde-dock已经更新，此插件很有可能已经失效！
+
 # dde-dock-mpd
 
 ![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase.png)

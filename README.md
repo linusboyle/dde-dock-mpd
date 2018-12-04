@@ -1,5 +1,7 @@
 [简体中文](https://github.com/linusboyle/dde-dock-mpd/blob/master/README_zh_CN.md)
 
+# Caution: dde-dock has updated and api changed, chances are that this plugin no longer works!
+
 # dde-dock-mpd
 
 ![screenshot](https://raw.githubusercontent.com/linusboyle/dde-dock-mpd/master/img/showcase.png)
